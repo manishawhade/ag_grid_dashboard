@@ -1,12 +1,7 @@
 import data from "./assessment_data.json";
 import { useState, useMemo, useRef, useEffect, useCallback, memo } from "react";
 import { AgGridReact } from "ag-grid-react";
-import {
-  ColDef,
-  ModuleRegistry,
-  GridOptions,
-  GridReadyEvent,
-} from "ag-grid-community";
+import { ColDef, ModuleRegistry, GridOptions } from "ag-grid-community";
 import { AllCommunityModule } from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
@@ -214,21 +209,6 @@ const Dashboard: React.FC = () => {
     }),
     []
   );
-
-  // Memoized function to calculate dynamic page size
-  const calculateDynamicPageSize = useCallback(() => {
-    if (gridRef.current?.api) {
-      console.log("Grid API available:", gridRef.current.api); // Debug log
-      const containerHeight = containerRef.current?.clientHeight || 400; // Fallback to 400px
-      const rowHeight =
-        gridRef.current.api.getSizesForCurrentTheme().rowHeight || 30;
-      const headerHeight = 50; // Approximate header height
-      const availableHeight = containerHeight - headerHeight;
-      const newPageSize = Math.max(1, Math.floor(availableHeight / rowHeight));
-    } else {
-      console.log("Grid API not available yet"); // Debug log
-    }
-  }, []);
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
